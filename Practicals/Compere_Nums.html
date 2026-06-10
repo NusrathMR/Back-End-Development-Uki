@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compere_Nums</title>
+</head>
+<body>
+
+    <h1>This is my first Back-end Project</h1>
+    First Number <input type="number" id="num1" placeholder="Ender your first number"><br><br>
+    Second Number <input type="number" id="num2" placeholder="Ender your Second number"><br><br>
+    <button onclick="dosum()">ADD</button>
+    <h3 id="results"></h3>
+
+    <script>
+        function dosum(){
+            let number1=Number(document.getElementById("num1").value);
+            let number2=Number(document.getElementById("num2").value);
+
+            let sum=number1+number2;
+            document.getElementById("results").innerText="ADD"+sum;
+        }
+    </script>
+</body>
+</html>

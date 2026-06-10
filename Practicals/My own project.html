@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find your age</title>
+</head>
+<body>
+    <b>Find your age</b><br><br>
+    Birth year <input type="number" placeholder=" Birth year" id="Byear"><br><br>
+    Current year <input type="number" placeholder="current year" id="Cyear"><br><br>
+    <button onclick="findage()">Find my age</button>
+    <h2 id="h2">
+    <script>
+        function findage(){
+            let Birthyear=Number(document.getElementById("Byear").value);
+            let Currentyear=Number(document.getElementById("Cyear").value);
+
+            let find=Currentyear-Birthyear;
+            document.getElementById("h2").innerText = "your age is"+find;
+        }
+    </script>
+
+    <h1>Create your full name</h1>
+    First name <input type="text" id="fname">
+    Last name <input type="text" id="lname">
+    <button onclick="createfullname()">Create</button>
+    <b id="Fullname"></b>
+
+    <script>
+        function createfullname(){
+            let Firstname=Text(document.getElementById("fname").value);
+            let Lastname=Text(document.getElementById("lname").value);
+
+            let Full_name=Firstname+Lastname;
+            document.getElementById("Fullname").innerText="youre full name is"+Full_name";
+        }
+    </script>
+
+
+</body>
+</html>
