@@ -13,4 +13,4 @@ function findpre(Amount){
         }
     }
 }
-findpre(500)
+findpre(500);
