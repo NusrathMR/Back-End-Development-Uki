@@ -1,0 +1,12 @@
+First, we wanna initialize the npm packages: npm init
+Then we wanna install the Express packages: npm install express --save
+then we wanna change the type of JavaScript in package.js commomJs to module.
+
+Now we can create the server through the express js. but we could not route it.
+
+then we wanna add the dependencies for the easiest work. 
+
+	first we wanna add dev dependencies: nodemon - nodemon helps to find errors live and it helps to fix the
+	errors in developer mode.  
+
+then we wanna add dependence that dotenv - is to maintain secret files such as port no and some information. 

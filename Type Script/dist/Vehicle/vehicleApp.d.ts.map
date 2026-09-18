@@ -1,0 +1,1 @@
+{"version":3,"file":"vehicleApp.d.ts","sourceRoot":"","sources":["../../src/Vehicle/vehicleApp.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,UAAU,EAAE,MAAM,cAAc,CAAC;AAI1C,qBAAa,UAAU;IACnB,oBAAoB,CAAC,WAAW,EAAE,UAAU,EAAE,GAAE,IAAI;IAO7C,IAAI;CAsBd"}

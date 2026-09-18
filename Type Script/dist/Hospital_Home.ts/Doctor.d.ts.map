@@ -1,0 +1,1 @@
+{"version":3,"file":"Doctor.d.ts","sourceRoot":"","sources":["../../src/Hospital_Home.ts/Doctor.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,SAAS,CAAC;AAEhC,qBAAa,MAAO,SAAQ,KAAK;IAC7B,OAAO,CAAC,kBAAkB,CAAQ;IAClC,OAAO,CAAC,MAAM,CAAC,QAAQ,CAAC,eAAe,CAAQ;gBAEnC,OAAO,EAAC,MAAM,EAAE,IAAI,EAAC,MAAM,EAAE,UAAU,EAAC,MAAM,EAAE,kBAAkB,EAAC,MAAM;CAIxF"}

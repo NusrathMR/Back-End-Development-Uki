@@ -1,0 +1,339 @@
+```javascript
+import Student from "../models/studentModel.js";
+
+// ==========================================
+// CREATE STUDENT
+// POST /api/students
+// ==========================================
+export const createStudent = async (req, res) => {
+    try {
+        const { name, email, registrationNumber, course } = req.body;
+
+        // Check required fields
+        if (!name || !email || !registrationNumber || !course) {
+            return res.status(400).json({
+                message: "Please provide all required fields"
+            });
+        }
+
+        // Check whether student already exists
+        const studentExist = await Student.findOne({
+            registrationNumber
+        });
+
+        if (studentExist) {
+            return res.status(400).json({
+                message: "Student already exists"
+            });
+        }
+
+        // Create new student
+        const newStudent = new Student({
+            name,
+            email,
+            registrationNumber,
+            course
+        });
+
+        // Save student
+        const savedStudent = await newStudent.save();
+
+        res.status(201).json({
+            message: "Student created successfully",
+            student: savedStudent
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+
+
+// ==========================================
+// GET ALL STUDENTS
+// GET /api/students
+// ==========================================
+export const getAllStudents = async (req, res) => {
+    try {
+
+        const students = await Student.find();
+
+        res.status(200).json({
+            count: students.length,
+            students: students
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+
+
+// ==========================================
+// GET SINGLE STUDENT
+// GET /api/students/:id
+// ==========================================
+export const getStudentById = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const student = await Student.findById(id);
+
+        // Student not found
+        if (!student) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        res.status(200).json(student);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+
+
+// ==========================================
+// UPDATE STUDENT
+// PUT /api/students/:id
+// ==========================================
+export const updateStudent = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const { name, email, registrationNumber, course } = req.body;
+
+        // Check if another student has the same registration number
+        if (registrationNumber) {
+
+            const existingStudent = await Student.findOne({
+                registrationNumber,
+                _id: { $ne: id }
+            });
+
+            if (existingStudent) {
+                return res.status(400).json({
+                    message: "Registration number already belongs to another student"
+                });
+            }
+        }
+
+        // Update student
+        const updatedStudent = await Student.findByIdAndUpdate(
+            id,
+            {
+                name,
+                email,
+                registrationNumber,
+                course
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        // Student not found
+        if (!updatedStudent) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Student updated successfully",
+            student: updatedStudent
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+
+
+// ==========================================
+// DELETE STUDENT
+// DELETE /api/students/:id
+// ==========================================
+export const deleteStudent = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const deletedStudent = await Student.findByIdAndDelete(id);
+
+        // Student not found
+        if (!deletedStudent) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Student deleted successfully",
+            student: deletedStudent
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+};
+```
+
+### Your REST API routes
+
+Create something like `studentRoutes.js`:
+
+```javascript
+import express from "express";
+
+import {
+    createStudent,
+    getAllStudents,
+    getStudentById,
+    updateStudent,
+    deleteStudent
+} from "../controllers/studentController.js";
+
+const router = express.Router();
+
+
+// CREATE
+router.post("/", createStudent);
+
+// READ ALL
+router.get("/", getAllStudents);
+
+// READ ONE
+router.get("/:id", getStudentById);
+
+// UPDATE
+router.put("/:id", updateStudent);
+
+// DELETE
+router.delete("/:id", deleteStudent);
+
+
+export default router;
+```
+
+Then in your main `app.js` or `server.js`:
+
+```javascript
+import express from "express";
+import studentRoutes from "./routes/studentRoutes.js";
+
+const app = express();
+
+app.use(express.json());
+
+app.use("/api/students", studentRoutes);
+
+app.listen(5000, () => {
+    console.log("Server running on port 5000");
+});
+```
+
+### Your complete CRUD endpoints
+
+| Method   | Endpoint            | Controller       | Purpose          |
+| -------- | ------------------- | ---------------- | ---------------- |
+| `POST`   | `/api/students`     | `createStudent`  | Create student   |
+| `GET`    | `/api/students`     | `getAllStudents` | Get all students |
+| `GET`    | `/api/students/:id` | `getStudentById` | Get one student  |
+| `PUT`    | `/api/students/:id` | `updateStudent`  | Update student   |
+| `DELETE` | `/api/students/:id` | `deleteStudent`  | Delete student   |
+
+### Example JSON for POST
+
+```json
+{
+    "name": "Nusrath Ahmed",
+    "email": "nusrath@example.com",
+    "registrationNumber": "STU001",
+    "course": "Full Stack Development"
+}
+```
+
+### Example JSON for PUT
+
+For example:
+
+```http
+PUT /api/students/68c123456789abcdef123456
+```
+
+```json
+{
+    "name": "Nusrath Ahmed",
+    "email": "nusrathnew@example.com",
+    "registrationNumber": "STU001",
+    "course": "Software Engineering"
+}
+```
+
+### Important Mongoose methods you're learning
+
+The controller is mainly built around these five methods:
+
+```javascript
+Student.find()
+```
+
+➡️ Get **all** students.
+
+```javascript
+Student.findById(id)
+```
+
+➡️ Get **one** student.
+
+```javascript
+Student.findByIdAndUpdate(id, data, options)
+```
+
+➡️ Update a student.
+
+```javascript
+Student.findByIdAndDelete(id)
+```
+
+➡️ Delete a student.
+
+```javascript
+new Student(data).save()
+```
+
+➡️ Create and save a student.
+
+One additional improvement I made is `runValidators: true` during updates. This makes Mongoose apply your schema validation when updating, rather than potentially accepting invalid values.
+
+If you send me your **`studentModel.js`, `examResultModel.js`, and `subjectModel.js` screenshots/code**, I can next build the **complete Student Management REST API**, including **student + subjects + exam results relationships**, controllers, routes, and example Postman requests.

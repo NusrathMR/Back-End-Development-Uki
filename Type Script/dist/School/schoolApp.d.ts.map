@@ -1,0 +1,1 @@
+{"version":3,"file":"schoolApp.d.ts","sourceRoot":"","sources":["../../src/School/schoolApp.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,OAAO,EAAE,MAAM,YAAY,CAAC;AAErC,qBAAa,SAAS;IAClB,oBAAoB,CAAC,QAAQ,EAAE,OAAO,EAAE,GAAE,IAAI;IAOvC,IAAI;CAkBd"}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form">
+        <h1 id="title"></h1>
+
+        <button type="submit" id="addtitle">Add title</button>
+    </form>
+
+
+    <script>
+        const form = document.getElementById("form");
+        const title = document.getElementByID("title");
+        const submit = document.getElementById("addtitle");
+
+        form.addEventListener("submit", (event)=>{
+            event.preventDefault();
+        }
+
+        )
+    </script>
+</body>
+</html>
